@@ -9,6 +9,8 @@ export function schemaValidation(schema) {
       return res.status(422).send(errorMessages);
     }
 
+    res.locals.user = user;
+
     next();
   };
 }

@@ -3,8 +3,8 @@ import bcrypt from "bcrypt";
 import { v4 as uuidV4 } from "uuid";
 
 export async function signUp(req, res) {
-  const user = req.body;
-
+  const user = res.locals.user;
+  
   const passwordHashed = bcrypt.hashSync(user.password, 10);
 
   try {
@@ -13,7 +13,7 @@ export async function signUp(req, res) {
       .insertOne({ ...user, password: passwordHashed });
   } catch (err) {
     console.log(err);
-    res.status(500).send(error.message);
+    res.status(500).send(err.message);
   }
 }
 
@@ -32,6 +32,6 @@ export async function signIn(req, res) {
     }
   } catch (err) {
     console.log(err);
-    res.status(500).send(error.message);
+    res.status(500).send(err.message);
   }
 }
